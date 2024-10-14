@@ -51,11 +51,11 @@ public class WebSecurityConfig {
                                 cps -> cps.policyDirectives("script-src 'self'")
                         ))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auths -> {
+                .authorizeHttpRequests(auths ->
                     auths
                             .requestMatchers("/security/login", "/gestion-usuarios/insertar-usuario").permitAll()
-                            .anyRequest().authenticated();
-                })
+                            .anyRequest().authenticated()
+                )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
