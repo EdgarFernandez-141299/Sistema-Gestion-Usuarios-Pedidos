@@ -15,6 +15,7 @@ import net.edgar.microserviceusuarios.helper.JWTHelper;
 import net.edgar.microserviceusuarios.helper.SecurityHelper;
 import net.edgar.microserviceusuarios.utility.TraceabilityUtils;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,12 +29,16 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
 import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.SecurityConstant.*;
+import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.TraceabilityConstant.TRACE_ID_HEADER;
 
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityFilter extends OncePerRequestFilter {
+
+    @Value("${spring.application.name}")
+    public String applicationName;
 
     private final JWTHelper jwtHelper;
 
@@ -42,8 +47,12 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        final String traceIdSpanId = TraceabilityUtils.generateTraceIdSpanId();
-        this.loadTraceIdSpanIdFilter(traceIdSpanId);
+        String traceIdFromHeader = request.getHeader(TRACE_ID_HEADER);
+        final String traceId = Objects.nonNull(traceIdFromHeader) ? traceIdFromHeader : TraceabilityUtils.generateTraceId();
+
+        final String spanId = TraceabilityUtils.generateSpanId(applicationName);
+
+        this.loadTraceIdSpanIdFilter(traceId, spanId);
 
         final String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
 
@@ -93,9 +102,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
     }
 
-    private void loadTraceIdSpanIdFilter(String traceIdSpanId) {
-        MDC.put("traceId", traceIdSpanId);
-        MDC.put("spanId", traceIdSpanId);
+    private void loadTraceIdSpanIdFilter(String traceId, String spanId) {
+        MDC.put("traceId", traceId);
+        MDC.put("spanId", spanId);
     }
 
 

@@ -12,8 +12,6 @@ public class MicroserviceUsuariosConstant {
 
         public static final String JWT_EXPIRADO = "jwtExpirado";
 
-        public static final String TRACE_ID_SPAN_ID = "traceIdSpanId";
-
         public static final String MISSING_TOKEN = "missingToken";
 
         public static final String INVALID_SIGNATURE_JWT = "invalidSignatureJwt";
@@ -30,9 +28,6 @@ public class MicroserviceUsuariosConstant {
 
         public static final String UNSUPPORTED_JWT = "unsupportedJwt";
 
-
-        public static final String USER_ID_HEADER = "User-Id";
-
         public static final String ACCESS_TOKEN_HEADER = "Access-Token";
 
         public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -48,8 +43,6 @@ public class MicroserviceUsuariosConstant {
         public static final String BEARER_PREFIX = "Bearer ";
 
         public static final String NO_AUTHENTICATION_TOKEN_PROVIDED_MESSAGE = "No authentication token provided";
-
-        public static final String TOKEN_INVALIDATED_MESSAGE = "The token has been invalidated";
 
         public static final String UNAUTHORIZED_CODIGO_BASE = "401.edgar-net-unauthorized.401";
 
@@ -73,17 +66,11 @@ public class MicroserviceUsuariosConstant {
 
         public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS_VALUE = "true";
 
-        public static final String ACCESS_CONTROL_EXPOSE_HEADERS_VALUE = "*"; /* Si se pone un "*" se estan
-         exponiendo TODOS los headers de la respuesta y por seguridad solo se deben de exponer los headers necesarios para el uso de los clientes, por lo tanto se deben de poner de la siguiente manera los headers -> "Authorization, Authorization-Refresh, Cambio-Password, Roles-Usuario, Step, Company, Timestamp"; */
-
+        public static final String ACCESS_CONTROL_EXPOSE_HEADERS_VALUE = "*";
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class ResponseConstant {
-
-        public static final String TRACE_ID_KEY = "traceId";
-
-        public static final String SPAN_ID_KEY = "spanId";
 
         public static final String EXCEPTION_DETAIL_KEY = "exceptionDetail";
 
@@ -101,29 +88,22 @@ public class MicroserviceUsuariosConstant {
 
         public static final String BAD_REQUEST_MENSAJE_BASE = "Parametros de entrada incorrectos";
 
-        public static final String PASSWORD_MISMATCH_CODIGO_BASE = "400.edgar-net-password-mismatch.400";
-
-        public static final String PASSWORD_MISMATCH_MENSAJE_BASE = "El password no coincide";
-
-        public static final String VIOLATIONS_RESTRICTIONS_CODIGO_BASE = "400.edgar-net-method-argument-not-valid.400";
-
-        public static final String VIOLATIONS_RESTRICTIONS_MENSAJE_BASE = "Los datos proporcionados no son válidos";
-
         public static final String EXISTING_USER_CODIGO_BASE = "400.edgar-net-existing-user.400";
 
         public static final String EXISTING_USER_MENSAJE_BASE = "Usuario existente";
 
-        public static final String NO_PASSWORD_UPDATE_MENSAJE = "No se pudo realizar la actualización del password";
-
-        public static final String AVISO_CAMBIO_PASSWORD = "El password se ha cambiado con exito";
-
-        public static final String DATABASE_PASSWORD_MISMATCH_MENSAJE = "El password actual no es correcto, verifica e inténtalo de nuevo";
-
-        public static final String NUEVO_PASSWORD_CONFIRMATION_MISMATCH_MENSAJE = "El nuevo password no coincide con la confirmación del mismo";
-
         public static final String EXISTING_USER_MENSAJE = "El usuario '%s' ya existe";
 
-        public static final String TRACE_ID_SPAN_ID_FORMATO = "%s-%s";
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class TraceabilityConstant {
+
+        public static final String TRACE_ID_HEADER = "Trace-Id";
+
+        public static final String TRACE_ID_KEY = "traceId";
+
+        public static final String SPAN_ID_KEY = "spanId";
 
         public static final String TRACE_ID_SPAN_ID_NULL_FORMAT = "null-null";
 

@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.*;
 import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.SecurityConstant.*;
+import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.TraceabilityConstant.*;
 
 @Component
 @Slf4j

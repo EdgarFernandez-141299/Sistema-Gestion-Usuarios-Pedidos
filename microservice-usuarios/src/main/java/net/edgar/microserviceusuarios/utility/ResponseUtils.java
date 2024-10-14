@@ -10,6 +10,8 @@ import org.slf4j.MDC;
 import java.util.List;
 
 import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.*;
+import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.TraceabilityConstant.SPAN_ID_KEY;
+import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.TraceabilityConstant.TRACE_ID_KEY;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
