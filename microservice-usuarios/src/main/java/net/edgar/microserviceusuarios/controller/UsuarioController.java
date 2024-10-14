@@ -3,6 +3,8 @@ package net.edgar.microserviceusuarios.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import net.edgar.microserviceusuarios.exception.ExistingUserException;
+import net.edgar.microserviceusuarios.exception.NotFoundException;
 import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
 import net.edgar.microserviceusuarios.model.dto.GlobalSuccessResponseDTO;
 import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioRequestDTO;
@@ -24,26 +26,25 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-
     @PostMapping("/insertar-usuario")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> insertarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) {
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> insertarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws ExistingUserException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ResponseUtils.generateSuccessResponse(this.usuarioService.insertarUsuario(usuarioRequestDTO)));
 
     }
 
     @GetMapping("/buscar-usuarios/{pCriterio}")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> buscarUsuarios(@PathVariable("pCriterio") String pCriterio) {
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> buscarUsuarios(@PathVariable("pCriterio") String pCriterio) throws NotFoundException {
         return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.buscarUsuarios(URLDecoder.decode(pCriterio, StandardCharsets.UTF_8))));
     }
 
     @GetMapping("/seleccionar-usuario")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> seleccionarUsuario(@RequestParam("idUsuario") Long idUsuario) {
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> seleccionarUsuario(@RequestParam("idUsuario") Long idUsuario) throws NotFoundException {
         return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.seleccionarUsuario(idUsuario)));
     }
 
     @PatchMapping("/actualizar-usuario/{idUsuario}")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> actualizarUsuario(@PathVariable("idUsuario") Long idUsuario, @RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws UpdateDatabaseException {
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> actualizarUsuario(@PathVariable("idUsuario") Long idUsuario, @RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws UpdateDatabaseException, NotFoundException {
         return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.actualizarUsuario(idUsuario, usuarioRequestDTO)));
     }
 

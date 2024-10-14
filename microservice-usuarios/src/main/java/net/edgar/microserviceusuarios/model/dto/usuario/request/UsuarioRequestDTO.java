@@ -17,8 +17,11 @@ public class UsuarioRequestDTO {
     @NotEmpty(message = "nombre es requerido")
     private String nombre;
 
+    @NotEmpty(message = "claveAcceso es requerido")
+    private String claveAcceso;
+
     @NotEmpty(message = "correoElectronico es requerido")
-    @Email(message = "El correoElectronico no cumple con el formato adecuado")
+    @Email(message = "correoElectronico no cumple con el formato adecuado")
     private String correoElectronico;
 
 }

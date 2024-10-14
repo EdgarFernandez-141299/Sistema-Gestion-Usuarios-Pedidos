@@ -2,11 +2,15 @@ package net.edgar.microserviceusuarios.controller.advice;
 
 import lombok.extern.slf4j.Slf4j;
 
+import net.edgar.microserviceusuarios.exception.ExistingUserException;
+import net.edgar.microserviceusuarios.exception.NotFoundException;
 import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
 import net.edgar.microserviceusuarios.model.dto.GlobalErrorResponseDTO;
 import net.edgar.microserviceusuarios.utility.ResponseUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,28 +24,29 @@ import java.util.NoSuchElementException;
 
 
 import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.*;
+import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.SecurityConstant.*;
+import static net.logstash.logback.argument.StructuredArguments.v;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalControllerAdvice {
 
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<GlobalErrorResponseDTO> noSuchElementExceptionHandler(NoSuchElementException noSuchElementException) {
-       // log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, noSuchElementException)));
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> noSuchElementExceptionHandler(NotFoundException notFoundException) {
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, notFoundException)));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         NOT_FOUND_CODIGO_BASE,
                         NOT_FOUND_MENSAJE_BASE,
-                        Collections.singletonList(noSuchElementException.getMessage()))
+                        Collections.singletonList(notFoundException.getMessage()))
                 , NOT_FOUND);
     }
 
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<GlobalErrorResponseDTO> MissingServletRequestParameterExceptionHandler(MissingServletRequestParameterException missingServletRequestParameterException) {
-        //log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, missingServletRequestParameterException)));
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, missingServletRequestParameterException)));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         BAD_REQUEST_CODIGO_BASE,
@@ -53,7 +58,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<GlobalErrorResponseDTO> DataIntegrityViolationExceptionHandler(DataIntegrityViolationException dataIntegrityViolationException) {
-        //log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, dataIntegrityViolationException)));
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, dataIntegrityViolationException)));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         BAD_REQUEST_CODIGO_BASE,
@@ -64,7 +69,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(UpdateDatabaseException.class)
     public ResponseEntity<GlobalErrorResponseDTO> UpdateDatabaseExceptionHandler(UpdateDatabaseException updateDatabaseException) {
-       // log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, updateDatabaseException)));
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, updateDatabaseException)));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         BAD_REQUEST_CODIGO_BASE,
@@ -73,27 +78,45 @@ public class GlobalControllerAdvice {
                 , BAD_REQUEST);
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> badCredentialsExceptionHandler(BadCredentialsException badCredentialsException) {
+        return new ResponseEntity<>(
+                ResponseUtils.generateErrorResponse(
+                        UNAUTHORIZED_CODIGO_BASE,
+                        UNAUTHORIZED_MENSAJE_BASE,
+                        Collections.singletonList(BAD_CREDENTIALS_DETALLES_MENSAJE_BASE))
+                , UNAUTHORIZED);
+
+    }
+
+    @ExceptionHandler(ExistingUserException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> existingUserExceptionHandler(ExistingUserException existingUserException) {
+        log.error("{}", v(EXCEPTION_DETAIL_KEY, existingUserException));
+        return new ResponseEntity<>(
+                ResponseUtils.generateErrorResponse(
+                        EXISTING_USER_CODIGO_BASE,
+                        EXISTING_USER_MENSAJE_BASE,
+                        Collections.singletonList(existingUserException.getMessage()))
+                , BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<GlobalErrorResponseDTO> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException methodArgumentNotValidException) {
-       // log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, methodArgumentNotValidException)));
-
-        List<String> details = new ArrayList<>();
-        methodArgumentNotValidException.getAllErrors().forEach(error -> {
-            details.add(error.getDefaultMessage());
-        });
-
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, methodArgumentNotValidException)));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         BAD_REQUEST_CODIGO_BASE,
                         BAD_REQUEST_MENSAJE_BASE,
-                        details)
+                        methodArgumentNotValidException.getBindingResult().getFieldErrors().stream()
+                                .map(FieldError::getDefaultMessage)
+                                .toList())
                 , BAD_REQUEST);
     }
 
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalErrorResponseDTO> globalExceptionHandler(Exception exception) {
-        //log.error("{}", v(EXCEPTION_DETAIL_KEY, exception));
+        log.error("{}", v(EXCEPTION_DETAIL_KEY, exception));
 
         System.out.println(exception.getClass());
         if (exception instanceof NoResourceFoundException noResourceFoundException) {

@@ -2,11 +2,14 @@ package net.edgar.microserviceusuarios.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import net.edgar.microserviceusuarios.entity.UsuarioEntity;
+import net.edgar.microserviceusuarios.exception.ExistingUserException;
+import net.edgar.microserviceusuarios.exception.NotFoundException;
 import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
 import net.edgar.microserviceusuarios.model.dto.usuario.UsuarioDTO;
 import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioRequestDTO;
 import net.edgar.microserviceusuarios.repository.UsuarioRepository;
 import net.edgar.microserviceusuarios.service.UsuarioService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,47 +17,57 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.EXISTING_USER_MENSAJE;
+
 @RequiredArgsConstructor
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
+
     @Override
     @Transactional
-    public UsuarioDTO insertarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
-        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioRequestDTO.getNombre(), usuarioRequestDTO.getCorreoElectronico(), Boolean.TRUE));
+    public UsuarioDTO insertarUsuario(UsuarioRequestDTO usuarioRequestDTO) throws ExistingUserException {
+
+        if (this.usuarioRepository.existsByNombreUsuario(usuarioRequestDTO.getNombre())) {
+            throw new ExistingUserException(String.format(EXISTING_USER_MENSAJE, usuarioRequestDTO.getNombre()));
+        }
+        usuarioRequestDTO.setClaveAcceso(this.passwordEncoder.encode(usuarioRequestDTO.getClaveAcceso()));
+        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioRequestDTO.getNombre(), usuarioRequestDTO.getClaveAcceso(), usuarioRequestDTO.getCorreoElectronico(), Boolean.TRUE));
         return new UsuarioDTO(usuarioEntity.getIdUsuario(), usuarioEntity.getNombre(), usuarioEntity.getCorreoElectronico());
     }
 
     @Override
-    public List<UsuarioDTO> buscarUsuarios(String pCriterio) {
+    public List<UsuarioDTO> buscarUsuarios(String pCriterio) throws NotFoundException {
         List<UsuarioDTO> lstUsuarios = this.usuarioRepository.buscarUsuarios(pCriterio);
 
         if (lstUsuarios.isEmpty()) {
-            throw new NoSuchElementException("No se encontraron registros");
+            throw new NotFoundException("No se encontraron registros");
         }
 
         return lstUsuarios;
     }
 
     @Override
-    public UsuarioDTO seleccionarUsuario(Long idUsuario) {
+    public UsuarioDTO seleccionarUsuario(Long idUsuario) throws NotFoundException {
         UsuarioEntity usuarioEntity = this.usuarioRepository.findByIdUsuarioAndActivoTrue(idUsuario)
-                .orElseThrow(() -> new NoSuchElementException(String.format("No se encontro el usuario con id %d", idUsuario)));
+                .orElseThrow(() -> new NotFoundException(String.format("No se encontro el usuario con id %d", idUsuario)));
         return new UsuarioDTO(usuarioEntity.getNombre(), usuarioEntity.getCorreoElectronico());
     }
 
     @Override
     @Transactional
-    public UsuarioDTO actualizarUsuario(Long idUsuario, UsuarioRequestDTO usuarioRequestDTO) throws UpdateDatabaseException {
+    public UsuarioDTO actualizarUsuario(Long idUsuario, UsuarioRequestDTO usuarioRequestDTO) throws UpdateDatabaseException, NotFoundException {
 
         if (this.usuarioRepository.actualizarUsuario(idUsuario, usuarioRequestDTO.getCorreoElectronico()) == 0) {
             throw new UpdateDatabaseException(String.format("No fue posible actualizar el usuario con id: %s", idUsuario));
         }
 
         UsuarioEntity usuarioEntity = this.usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new NoSuchElementException(String.format("El usuario con id: %s no fue encontrado", idUsuario)));
+                .orElseThrow(() -> new NotFoundException(String.format("El usuario con id: %s no fue encontrado", idUsuario)));
 
         return new UsuarioDTO(usuarioEntity.getCorreoElectronico());
     }

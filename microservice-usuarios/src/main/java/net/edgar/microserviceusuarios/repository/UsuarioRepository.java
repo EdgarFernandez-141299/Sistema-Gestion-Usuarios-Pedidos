@@ -27,6 +27,11 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
     Optional<UsuarioEntity> findByIdUsuarioAndActivoTrue(Long idUsuario);
 
+    Optional<UsuarioEntity> findByNombre(String nombreUsuario);
+
+    @Query("SELECT COUNT(usuarioEntity) > 0 FROM UsuarioEntity usuarioEntity WHERE usuarioEntity.nombre = :nombre")
+    boolean existsByNombreUsuario(@Param("nombre") String nombre);
+
     @Modifying
     @Query("UPDATE UsuarioEntity ue "
             + "SET ue.correoElectronico = :#{#correoElectronico} "

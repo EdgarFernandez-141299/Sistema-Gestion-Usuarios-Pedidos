@@ -32,4 +32,13 @@ public class ResponseUtils {
                 .build();
     }
 
+    public static GlobalErrorResponseDTO generateErrorResponse(String codigo, String folio, String mensaje, List<String> lstDetalles) {
+        return GlobalErrorResponseDTO.builder()
+                .codigo(codigo)
+                .folio(folio)
+                .mensaje(mensaje)
+                .detalles(lstDetalles)
+                .build();
+    }
+
 }

@@ -30,6 +30,10 @@ public class UsuarioEntity implements Serializable {
     private String nombre;
 
     @Basic(optional = false)
+    @Column(name = "clave_acceso")
+    private String claveAcceso;
+
+    @Basic(optional = false)
     @Column(name = "correo_electronico")
     private String correoElectronico;
 
@@ -42,9 +46,12 @@ public class UsuarioEntity implements Serializable {
     private LocalDateTime fechaRegistro;
 
 
-    public UsuarioEntity(String nombre, String correoElectronico, Boolean activo) {
+    public UsuarioEntity(String nombre, String claveAcceso, String correoElectronico, Boolean activo) {
         this.nombre = nombre;
+        this.claveAcceso = claveAcceso;
         this.correoElectronico = correoElectronico;
         this.activo = activo;
     }
+
+
 }

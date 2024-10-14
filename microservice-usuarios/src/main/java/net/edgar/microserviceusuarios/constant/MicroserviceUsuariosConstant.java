@@ -31,9 +31,9 @@ public class MicroserviceUsuariosConstant {
         public static final String UNSUPPORTED_JWT = "unsupportedJwt";
 
 
-        public static final String X_USER_ID_HEADER = "X-User-Id";
+        public static final String USER_ID_HEADER = "User-Id";
 
-        public static final String X_ACCESS_TOKEN_HEADER = "X-Access-Token";
+        public static final String ACCESS_TOKEN_HEADER = "Access-Token";
 
         public static final String AUTHORIZATION_HEADER = "Authorization";
 
@@ -56,6 +56,7 @@ public class MicroserviceUsuariosConstant {
         public static final String UNAUTHORIZED_MENSAJE_BASE = "Ocurrió un error de autenticación";
 
         public static final String FORBIDDEN_CODIGO_BASE = "403.edgar-net-unauthorized.403";
+
         public static final String FORBIDDEN_MENSAJE_BASE = "Ocurrió un error de acceso prohibido";
 
         public static final String BAD_CREDENTIALS_DETALLES_MENSAJE_BASE = "Credenciales erróneas";
