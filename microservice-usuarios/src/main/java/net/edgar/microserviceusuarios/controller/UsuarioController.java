@@ -7,7 +7,8 @@ import net.edgar.microserviceusuarios.exception.ExistingUserException;
 import net.edgar.microserviceusuarios.exception.NotFoundException;
 import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
 import net.edgar.microserviceusuarios.model.dto.GlobalSuccessResponseDTO;
-import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioRequestDTO;
+import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioCreateRequestDTO;
+import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioUpdateRequestDTO;
 import net.edgar.microserviceusuarios.service.UsuarioService;
 import net.edgar.microserviceusuarios.utility.ResponseUtils;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,9 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/insertar-usuario")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> insertarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws ExistingUserException {
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> insertarUsuario(@RequestBody @Valid UsuarioCreateRequestDTO usuarioCreateRequestDTO) throws ExistingUserException {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ResponseUtils.generateSuccessResponse(this.usuarioService.insertarUsuario(usuarioRequestDTO)));
+                .body(ResponseUtils.generateSuccessResponse(this.usuarioService.insertarUsuario(usuarioCreateRequestDTO)));
 
     }
 
@@ -44,8 +45,8 @@ public class UsuarioController {
     }
 
     @PatchMapping("/actualizar-usuario/{idUsuario}")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> actualizarUsuario(@PathVariable("idUsuario") Long idUsuario, @RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws UpdateDatabaseException, NotFoundException {
-        return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.actualizarUsuario(idUsuario, usuarioRequestDTO)));
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> actualizarUsuario(@PathVariable("idUsuario") Long idUsuario, @RequestBody @Valid UsuarioUpdateRequestDTO usuarioUpdateRequestDTO) throws UpdateDatabaseException, NotFoundException {
+        return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.actualizarUsuario(idUsuario, usuarioUpdateRequestDTO)));
     }
 
     @DeleteMapping("/eliminar-usuario/{idUsuario}")

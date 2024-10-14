@@ -6,7 +6,8 @@ import net.edgar.microserviceusuarios.exception.ExistingUserException;
 import net.edgar.microserviceusuarios.exception.NotFoundException;
 import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
 import net.edgar.microserviceusuarios.model.dto.usuario.UsuarioDTO;
-import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioRequestDTO;
+import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioCreateRequestDTO;
+import net.edgar.microserviceusuarios.model.dto.usuario.request.UsuarioUpdateRequestDTO;
 import net.edgar.microserviceusuarios.repository.UsuarioRepository;
 import net.edgar.microserviceusuarios.service.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.EXISTING_USER_MENSAJE;
 
@@ -30,13 +29,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioDTO insertarUsuario(UsuarioRequestDTO usuarioRequestDTO) throws ExistingUserException {
+    public UsuarioDTO insertarUsuario(UsuarioCreateRequestDTO usuarioCreateRequestDTO) throws ExistingUserException {
 
-        if (this.usuarioRepository.existsByNombreUsuario(usuarioRequestDTO.getNombre())) {
-            throw new ExistingUserException(String.format(EXISTING_USER_MENSAJE, usuarioRequestDTO.getNombre()));
+        if (this.usuarioRepository.existsByNombreUsuario(usuarioCreateRequestDTO.getNombre())) {
+            throw new ExistingUserException(String.format(EXISTING_USER_MENSAJE, usuarioCreateRequestDTO.getNombre()));
         }
-        usuarioRequestDTO.setClaveAcceso(this.passwordEncoder.encode(usuarioRequestDTO.getClaveAcceso()));
-        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioRequestDTO.getNombre(), usuarioRequestDTO.getClaveAcceso(), usuarioRequestDTO.getCorreoElectronico(), Boolean.TRUE));
+        usuarioCreateRequestDTO.setClaveAcceso(this.passwordEncoder.encode(usuarioCreateRequestDTO.getClaveAcceso()));
+        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioCreateRequestDTO.getNombre(), usuarioCreateRequestDTO.getClaveAcceso(), usuarioCreateRequestDTO.getCorreoElectronico(), Boolean.TRUE));
         return new UsuarioDTO(usuarioEntity.getIdUsuario(), usuarioEntity.getNombre(), usuarioEntity.getCorreoElectronico());
     }
 
@@ -60,9 +59,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioDTO actualizarUsuario(Long idUsuario, UsuarioRequestDTO usuarioRequestDTO) throws UpdateDatabaseException, NotFoundException {
+    public UsuarioDTO actualizarUsuario(Long idUsuario, UsuarioUpdateRequestDTO usuarioUpdateRequestDTO) throws UpdateDatabaseException, NotFoundException {
 
-        if (this.usuarioRepository.actualizarUsuario(idUsuario, usuarioRequestDTO.getCorreoElectronico()) == 0) {
+        if (this.usuarioRepository.actualizarUsuario(idUsuario, usuarioUpdateRequestDTO.getCorreoElectronico(), this.passwordEncoder.encode(usuarioUpdateRequestDTO.getClaveAcceso())) == 0) {
             throw new UpdateDatabaseException(String.format("No fue posible actualizar el usuario con id: %s", idUsuario));
         }
 
@@ -76,7 +75,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public String eliminarUsuario(Long idUsuario) throws UpdateDatabaseException {
 
-        if(this.usuarioRepository.eliminarUsuario(idUsuario, Boolean.FALSE) == 0) {
+        if (this.usuarioRepository.eliminarUsuario(idUsuario, Boolean.FALSE) == 0) {
             throw new UpdateDatabaseException(String.format("No fue posible eliminar el usuario con id: %s", idUsuario));
         }
 

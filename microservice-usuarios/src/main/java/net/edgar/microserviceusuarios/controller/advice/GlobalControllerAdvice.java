@@ -9,6 +9,7 @@ import net.edgar.microserviceusuarios.model.dto.GlobalErrorResponseDTO;
 import net.edgar.microserviceusuarios.utility.ResponseUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -33,7 +34,7 @@ import static org.springframework.http.HttpStatus.*;
 public class GlobalControllerAdvice {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<GlobalErrorResponseDTO> noSuchElementExceptionHandler(NotFoundException notFoundException) {
+    public ResponseEntity<GlobalErrorResponseDTO> notFoundExceptionHandler(NotFoundException notFoundException) {
         log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, notFoundException)));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
@@ -41,6 +42,17 @@ public class GlobalControllerAdvice {
                         NOT_FOUND_MENSAJE_BASE,
                         Collections.singletonList(notFoundException.getMessage()))
                 , NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> httpMessageNotReadableExceptionExceptionHandler(HttpMessageNotReadableException httpMessageNotReadableException) {
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, httpMessageNotReadableException)));
+        return new ResponseEntity<>(
+                ResponseUtils.generateErrorResponse(
+                        BAD_REQUEST_CODIGO_BASE,
+                        BAD_REQUEST_MENSAJE_BASE,
+                        Collections.singletonList(httpMessageNotReadableException.getMessage()))
+                , BAD_REQUEST);
     }
 
 

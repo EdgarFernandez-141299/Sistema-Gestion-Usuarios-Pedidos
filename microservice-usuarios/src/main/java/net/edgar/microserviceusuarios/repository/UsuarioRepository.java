@@ -34,9 +34,10 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
     @Modifying
     @Query("UPDATE UsuarioEntity ue "
-            + "SET ue.correoElectronico = :#{#correoElectronico} "
+            + "SET ue.correoElectronico = :#{#correoElectronico}, "
+            + "ue.claveAcceso = :#{#claveAcceso} "
             + "WHERE ue.idUsuario = :#{#idUsuario}")
-    int actualizarUsuario(@Param("idUsuario") Long idUsuario, @Param("correoElectronico") String correoElectronico);
+    int actualizarUsuario(@Param("idUsuario") Long idUsuario, @Param("correoElectronico") String correoElectronico, @Param("claveAcceso") String claveAcceso);
 
     @Modifying
     @Query("UPDATE UsuarioEntity ue "

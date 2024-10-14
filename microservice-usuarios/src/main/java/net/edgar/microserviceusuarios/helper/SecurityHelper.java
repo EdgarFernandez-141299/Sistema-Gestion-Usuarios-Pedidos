@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class SecurityHelper {
 
     private final UserDetailsService userDetailsService;
 
     public UserDetails loadUserAuthorizationDetails(String username) {
-        log.info("Se consulta en base de datos...");
         return this.userDetailsService.loadUserByUsername(username);
     }
 

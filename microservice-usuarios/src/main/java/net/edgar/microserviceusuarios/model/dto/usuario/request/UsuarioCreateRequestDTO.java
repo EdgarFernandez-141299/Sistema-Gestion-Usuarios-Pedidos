@@ -1,6 +1,5 @@
 package net.edgar.microserviceusuarios.model.dto.usuario.request;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UsuarioRequestDTO {
+public class UsuarioCreateRequestDTO {
 
     @NotEmpty(message = "nombre es requerido")
     private String nombre;
