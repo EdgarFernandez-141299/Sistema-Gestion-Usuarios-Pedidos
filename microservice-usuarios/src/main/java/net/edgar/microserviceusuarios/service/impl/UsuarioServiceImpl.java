@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 
 import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.EXISTING_USER_MENSAJE;
 
@@ -34,8 +35,14 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (this.usuarioRepository.existsByNombreUsuario(usuarioCreateRequestDTO.getNombre())) {
             throw new ExistingUserException(String.format(EXISTING_USER_MENSAJE, usuarioCreateRequestDTO.getNombre()));
         }
+
         usuarioCreateRequestDTO.setClaveAcceso(this.passwordEncoder.encode(usuarioCreateRequestDTO.getClaveAcceso()));
-        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioCreateRequestDTO.getNombre(), usuarioCreateRequestDTO.getClaveAcceso(), usuarioCreateRequestDTO.getCorreoElectronico(), Boolean.TRUE));
+        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioCreateRequestDTO.getNombre()
+                .toLowerCase(Locale.forLanguageTag("es")),
+                usuarioCreateRequestDTO.getClaveAcceso(),
+                usuarioCreateRequestDTO.getCorreoElectronico(),
+                Boolean.TRUE));
+
         return new UsuarioDTO(usuarioEntity.getIdUsuario(), usuarioEntity.getNombre(), usuarioEntity.getCorreoElectronico());
     }
 
