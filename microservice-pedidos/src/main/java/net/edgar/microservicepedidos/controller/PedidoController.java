@@ -3,8 +3,10 @@ package net.edgar.microservicepedidos.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import net.edgar.microservicepedidos.exception.NotFoundException;
+import net.edgar.microservicepedidos.exception.UpdateDatabaseException;
 import net.edgar.microservicepedidos.model.dto.GlobalSuccessResponseDTO;
 import net.edgar.microservicepedidos.model.dto.pedido.request.PedidoCreateRequestDTO;
+import net.edgar.microservicepedidos.model.dto.pedido.request.PedidoUpdateRequestDTO;
 import net.edgar.microservicepedidos.service.PedidoService;
 import net.edgar.microservicepedidos.utility.ResponseUtils;
 import org.springframework.http.HttpStatus;
@@ -39,6 +41,10 @@ public class PedidoController {
         return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.pedidoService.seleccionarPedido(idPedido)));
     }
 
+    @PatchMapping("/actualizar-pedido/{idPedido}")
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> actualizarPedido(@PathVariable("idPedido") Long idUsuario, @RequestBody @Valid PedidoUpdateRequestDTO pedidoUpdateRequestDTO) throws UpdateDatabaseException, NotFoundException {
+        return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.pedidoService.actualizarPedido(idUsuario, pedidoUpdateRequestDTO)));
+    }
 
 
 }

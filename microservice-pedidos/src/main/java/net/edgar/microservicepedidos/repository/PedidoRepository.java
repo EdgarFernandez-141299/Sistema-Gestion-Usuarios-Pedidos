@@ -4,6 +4,7 @@ import net.edgar.microservicepedidos.entity.PedidoEntity;
 import net.edgar.microservicepedidos.model.dto.pedido.PedidoDTO;
 import net.edgar.microservicepedidos.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -26,6 +27,10 @@ public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 
 
     Optional<PedidoEntity> findByIdPedidoAndEstadoNot(Long idPedido, EstadoEnum estadoEnum);
+
+    @Modifying
+    @Query("UPDATE PedidoEntity pe SET pe.estado = :estadoEnum WHERE pe.idPedido = :idPedido")
+    int actualizarPedido(@Param("idPedido") Long idPedido, @Param("estadoEnum") EstadoEnum estadoEnum);
 
 
 

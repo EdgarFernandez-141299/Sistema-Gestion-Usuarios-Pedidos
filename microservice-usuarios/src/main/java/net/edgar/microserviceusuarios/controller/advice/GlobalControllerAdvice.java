@@ -33,7 +33,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<GlobalErrorResponseDTO> notFoundExceptionHandler(NotFoundException notFoundException) {
-        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, notFoundException)));
+        log.error("{}", v(EXCEPTION_DETAIL_KEY, notFoundException));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         NOT_FOUND_CODIGO_BASE,
