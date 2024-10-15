@@ -44,8 +44,8 @@ public class SecurityController {
                         String.format("%s", SUCCESS_LOGIN_MESSAGE)));
     }
 
-    @GetMapping("/refresh-token")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> refreshToken(HttpServletRequest request) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    @PostMapping("/refresh-token")
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> refreshToken() throws InvalidKeySpecException, NoSuchAlgorithmException {
         return ResponseEntity.ok()
                 .header(ACCESS_TOKEN_HEADER, this.securityService.refreshToken())
                 .body(ResponseUtils.generateSuccessResponse(

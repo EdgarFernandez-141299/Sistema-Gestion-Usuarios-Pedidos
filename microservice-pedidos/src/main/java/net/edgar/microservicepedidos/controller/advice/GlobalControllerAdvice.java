@@ -1,16 +1,13 @@
-package net.edgar.microserviceusuarios.controller.advice;
+package net.edgar.microservicepedidos.controller.advice;
 
 import lombok.extern.slf4j.Slf4j;
-
-import net.edgar.microserviceusuarios.exception.ExistingUserException;
-import net.edgar.microserviceusuarios.exception.NotFoundException;
-import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
-import net.edgar.microserviceusuarios.model.dto.GlobalErrorResponseDTO;
-import net.edgar.microserviceusuarios.utility.ResponseUtils;
+import net.edgar.microservicepedidos.exception.NotFoundException;
+import net.edgar.microservicepedidos.exception.UpdateDatabaseException;
+import net.edgar.microservicepedidos.model.dto.GlobalErrorResponseDTO;
+import net.edgar.microservicepedidos.utility.ResponseUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -20,10 +17,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Collections;
 
-
-
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.*;
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.SecurityConstant.*;
+import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.ResponseConstant.*;
 import static net.logstash.logback.argument.StructuredArguments.v;
 import static org.springframework.http.HttpStatus.*;
 
@@ -88,7 +82,7 @@ public class GlobalControllerAdvice {
                 , BAD_REQUEST);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
+   /* @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<GlobalErrorResponseDTO> badCredentialsExceptionHandler(BadCredentialsException badCredentialsException) {
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
@@ -97,18 +91,8 @@ public class GlobalControllerAdvice {
                         Collections.singletonList(BAD_CREDENTIALS_DETALLES_MENSAJE_BASE))
                 , UNAUTHORIZED);
 
-    }
+    }*/
 
-    @ExceptionHandler(ExistingUserException.class)
-    public ResponseEntity<GlobalErrorResponseDTO> existingUserExceptionHandler(ExistingUserException existingUserException) {
-        log.error("{}", v(EXCEPTION_DETAIL_KEY, existingUserException));
-        return new ResponseEntity<>(
-                ResponseUtils.generateErrorResponse(
-                        EXISTING_USER_CODIGO_BASE,
-                        EXISTING_USER_MENSAJE_BASE,
-                        Collections.singletonList(existingUserException.getMessage()))
-                , BAD_REQUEST);
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<GlobalErrorResponseDTO> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException methodArgumentNotValidException) {

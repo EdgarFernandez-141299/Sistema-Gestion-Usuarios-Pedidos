@@ -34,9 +34,9 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/buscar-usuarios/{pCriterio}")
-    public ResponseEntity<GlobalSuccessResponseDTO<Object>> buscarUsuarios(@PathVariable("pCriterio") String pCriterio) throws NotFoundException {
-        return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.buscarUsuarios(URLDecoder.decode(pCriterio, StandardCharsets.UTF_8))));
+    @GetMapping("/buscar-usuarios/{criterio}")
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> buscarUsuarios(@PathVariable("criterio") String criterio) throws NotFoundException {
+        return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.buscarUsuarios(URLDecoder.decode(criterio, StandardCharsets.UTF_8))));
     }
 
     @GetMapping("/seleccionar-usuario")

@@ -1,0 +1,27 @@
+package net.edgar.microservicepedidos.model.dto;
+
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class GlobalErrorResponseDTO {
+
+  private String codigo;
+
+  private String folio;
+
+  private String mensaje;
+
+  private List<String> detalles;
+
+}

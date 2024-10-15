@@ -34,7 +34,7 @@ public class WebSecurityAuthenticationEntryPointComponent implements Authenticat
 
         Map<Boolean, String> mensajesErrorMap = new HashMap<>();
 
-        String traceIdSpanId = String.format("%s-%s", MDC.get(TRACE_ID_KEY), MDC.get(SPAN_ID_KEY));
+        String traceIdSpanId = String.format(TRACE_ID_SPAN_ID_FORMATO, MDC.get(TRACE_ID_KEY), MDC.get(SPAN_ID_KEY));
 
         Object jwtExpirado = request.getAttribute(JWT_EXPIRADO);
         Object missingToken = request.getAttribute(MISSING_TOKEN);

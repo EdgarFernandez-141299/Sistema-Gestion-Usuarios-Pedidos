@@ -32,13 +32,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public UsuarioDTO insertarUsuario(UsuarioCreateRequestDTO usuarioCreateRequestDTO) throws ExistingUserException {
 
+        usuarioCreateRequestDTO.setNombre(usuarioCreateRequestDTO.getNombre().toLowerCase(Locale.forLanguageTag("es")));
+
         if (this.usuarioRepository.existsByNombreUsuario(usuarioCreateRequestDTO.getNombre())) {
             throw new ExistingUserException(String.format(EXISTING_USER_MENSAJE, usuarioCreateRequestDTO.getNombre()));
         }
 
         usuarioCreateRequestDTO.setClaveAcceso(this.passwordEncoder.encode(usuarioCreateRequestDTO.getClaveAcceso()));
-        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioCreateRequestDTO.getNombre()
-                .toLowerCase(Locale.forLanguageTag("es")),
+
+        UsuarioEntity usuarioEntity = this.usuarioRepository.save(new UsuarioEntity(usuarioCreateRequestDTO.getNombre(),
                 usuarioCreateRequestDTO.getClaveAcceso(),
                 usuarioCreateRequestDTO.getCorreoElectronico(),
                 Boolean.TRUE));
@@ -47,11 +49,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public List<UsuarioDTO> buscarUsuarios(String pCriterio) throws NotFoundException {
-        List<UsuarioDTO> lstUsuarios = this.usuarioRepository.buscarUsuarios(pCriterio);
+    public List<UsuarioDTO> buscarUsuarios(String criterio) throws NotFoundException {
+        List<UsuarioDTO> lstUsuarios = this.usuarioRepository.buscarUsuarios(criterio);
 
         if (lstUsuarios.isEmpty()) {
-            throw new NotFoundException("No se encontraron registros");
+            throw new NotFoundException("No se encontrarón usuarios con el criterio proporcionado");
         }
 
         return lstUsuarios;
@@ -59,8 +61,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO seleccionarUsuario(Long idUsuario) throws NotFoundException {
+
         UsuarioEntity usuarioEntity = this.usuarioRepository.findByIdUsuarioAndActivoTrue(idUsuario)
                 .orElseThrow(() -> new NotFoundException(String.format("No se encontro el usuario con id %d", idUsuario)));
+
         return new UsuarioDTO(usuarioEntity.getNombre(), usuarioEntity.getCorreoElectronico());
     }
 

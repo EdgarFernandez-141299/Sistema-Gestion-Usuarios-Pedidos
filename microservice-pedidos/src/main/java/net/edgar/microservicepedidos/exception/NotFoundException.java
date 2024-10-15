@@ -1,5 +1,4 @@
-package net.edgar.microserviceusuarios.exception;
-
+package net.edgar.microservicepedidos.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,9 +7,10 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
-public class PasswordMismatchException extends Exception {
+public class NotFoundException extends Exception {
 
-    public PasswordMismatchException(String message) {
+    public NotFoundException(String message) {
         super(message);
     }
+
 }

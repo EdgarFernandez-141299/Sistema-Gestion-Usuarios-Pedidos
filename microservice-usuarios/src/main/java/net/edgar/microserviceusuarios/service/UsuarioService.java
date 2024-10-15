@@ -13,7 +13,7 @@ public interface UsuarioService {
 
     UsuarioDTO insertarUsuario(UsuarioCreateRequestDTO usuarioCreateRequestDTO) throws ExistingUserException;
 
-    List<UsuarioDTO> buscarUsuarios(String pCriterio) throws NotFoundException;
+    List<UsuarioDTO> buscarUsuarios(String criterio) throws NotFoundException;
 
     UsuarioDTO seleccionarUsuario(Long idUsuario) throws NotFoundException;
 

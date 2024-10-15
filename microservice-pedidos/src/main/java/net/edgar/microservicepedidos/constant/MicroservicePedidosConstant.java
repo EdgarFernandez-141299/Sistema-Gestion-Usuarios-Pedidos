@@ -1,10 +1,10 @@
-package net.edgar.microserviceusuarios.constant;
+package net.edgar.microservicepedidos.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MicroserviceUsuariosConstant {
+public class MicroservicePedidosConstant {
 
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

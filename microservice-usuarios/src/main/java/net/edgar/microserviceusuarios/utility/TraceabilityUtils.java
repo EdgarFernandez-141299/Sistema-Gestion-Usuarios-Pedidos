@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TraceabilityUtils {
@@ -24,20 +26,14 @@ public class TraceabilityUtils {
 
     public static String generateSpanId(String applicationName) {
 
-        // Obtener las primeras tres letras del nombre de la aplicación
-        String prefix = applicationName.length() >= 3 ? applicationName.substring(0, 3).toUpperCase() : applicationName.toUpperCase();
+        // Dividir el nombre de la aplicación en partes separadas por guiones medios
+        String[] parts = applicationName.split("-");
 
-        // Obtener las letras después del guion medio
-        String suffix = Strings.EMPTY;
-        if (applicationName.contains("-")) {
-            String[] parts = applicationName.split("-");
-            if (parts.length > 1) {
-                suffix = parts[1].length() >= 3 ? parts[1].substring(0, 3).toUpperCase() : parts[1].toUpperCase();
-            }
-        }
-
-        // Combinar prefix y suffix
-        String spanIdPrefix = prefix + suffix;
+        // Usar Stream para mapear y obtener las primeras tres letras de cada parte no vacía
+        String spanIdPrefix = Arrays.stream(parts)
+                .filter(part -> !part.isEmpty())
+                .map(part -> part.substring(0, Math.min(3, part.length())).toUpperCase())
+                .collect(Collectors.joining());
 
         // Generar el resto del spanId
         LocalDateTime fechaActual = LocalDateTime.now();
@@ -45,7 +41,7 @@ public class TraceabilityUtils {
                 .concat(String.format("%02d", fechaActual.getMonthValue()))
                 .concat(String.format("%02d", fechaActual.getDayOfMonth()));
 
+        // Combinar el prefijo, la fecha y el UUID para formar el spanId final
         return String.format("%s%s%s", spanIdPrefix, spanIdDateGenerated, UUID.randomUUID().toString().replace("-", Strings.EMPTY).substring(0, 20));
-
     }
 }

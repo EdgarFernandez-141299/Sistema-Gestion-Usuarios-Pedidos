@@ -19,11 +19,11 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
             + " usuario.correoElectronico as correoElectronico "
             + ") from UsuarioEntity as usuario "
             + " where usuario.activo = true "
-            + " and (:#{#pCriterio == null || #pCriterio.isEmpty() ? null : #pCriterio} is null "
-            + " or (lower(usuario.nombre) like lower(concat('%', replace(:#{#pCriterio}, ' ', '%'), '%')) "
-            + " or lower(usuario.correoElectronico) like lower(concat('%', replace(:#{#pCriterio}, ' ', '%'), '%'))))"
+            + " and (:#{#criterio == null || #criterio.isEmpty() ? null : #criterio} is null "
+            + " or (lower(usuario.nombre) like lower(concat('%', replace(:#{#criterio}, ' ', '%'), '%')) "
+            + " or lower(usuario.correoElectronico) like lower(concat('%', replace(:#{#criterio}, ' ', '%'), '%'))))"
     )
-    List<UsuarioDTO> buscarUsuarios(@Param("pCriterio") String pCriterio) throws DataAccessException;
+    List<UsuarioDTO> buscarUsuarios(@Param("criterio") String criterio);
 
     Optional<UsuarioEntity> findByIdUsuarioAndActivoTrue(Long idUsuario);
 

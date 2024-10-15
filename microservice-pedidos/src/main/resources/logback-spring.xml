@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <property name="LOG_FILE" value="log/${springAppName}.log"/>
+     <property name="LOG_PATTERN_DEV"
+              value='{"date":"%d{yyyy-MM-dd HH:mm:ss.SSS}","level":"%level","trace_id":"%X{traceId:-}","span_id":"%X{spanId:-}","thread":"%thread","class":"%logger{40}:%line","message":"%message"}'/>
+    <property name="LOG_PATTERN_CLOUD"
+              value='{"date":"%d{yyyy-MM-dd HH:mm:ss.SSS}","level":"%level","trace_id":"%X{traceId:-}","span_id":"%X{spanId:-}","thread":"%thread","class":"%logger{40}:%line","message":"%message"}'/>
+
+    <appender name="CONSOLE_DEV" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        ${LOG_PATTERN_DEV}
+                    </pattern>
+                </pattern>
+                <arguments/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE_CLOUD" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        ${LOG_PATTERN_CLOUD}
+                    </pattern>
+                </pattern>
+                <arguments/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <springProfile name="dev">
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <appender-ref ref="CONSOLE_DEV"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_DEV"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="cloud">
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <appender-ref ref="CONSOLE_CLOUD"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_CLOUD"/>
+        </root>
+    </springProfile>
+</configuration>

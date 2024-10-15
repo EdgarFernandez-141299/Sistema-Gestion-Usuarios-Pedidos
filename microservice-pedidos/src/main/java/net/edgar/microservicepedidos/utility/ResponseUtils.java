@@ -1,17 +1,17 @@
-package net.edgar.microserviceusuarios.utility;
+package net.edgar.microservicepedidos.utility;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import net.edgar.microserviceusuarios.model.dto.GlobalErrorResponseDTO;
-import net.edgar.microserviceusuarios.model.dto.GlobalSuccessResponseDTO;
+import net.edgar.microservicepedidos.model.dto.GlobalErrorResponseDTO;
+import net.edgar.microservicepedidos.model.dto.GlobalSuccessResponseDTO;
 import org.slf4j.MDC;
 
 import java.util.List;
 
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.ResponseConstant.*;
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.TraceabilityConstant.*;
-
+import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.ResponseConstant.OK_MENSAJE_BASE;
+import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.TraceabilityConstant.SPAN_ID_KEY;
+import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.TraceabilityConstant.TRACE_ID_KEY;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseUtils {
@@ -19,7 +19,7 @@ public class ResponseUtils {
     public static <T> GlobalSuccessResponseDTO<Object> generateSuccessResponse(T respuesta) {
         return GlobalSuccessResponseDTO.builder()
                 .mensaje(OK_MENSAJE_BASE)
-                .folio(String.format(TRACE_ID_SPAN_ID_FORMATO, MDC.get(TRACE_ID_KEY), MDC.get(SPAN_ID_KEY)))
+                .folio(String.format("%s-%s", MDC.get(TRACE_ID_KEY), MDC.get(SPAN_ID_KEY)))
                 .respuesta(respuesta)
                 .build();
     }
@@ -27,7 +27,7 @@ public class ResponseUtils {
     public static GlobalErrorResponseDTO generateErrorResponse(String codigo, String mensaje, List<String> lstDetalles) {
         return GlobalErrorResponseDTO.builder()
                 .codigo(codigo)
-                .folio(String.format(TRACE_ID_SPAN_ID_FORMATO, MDC.get(TRACE_ID_KEY), MDC.get(SPAN_ID_KEY)))
+                .folio(String.format("%s-%s", MDC.get(TRACE_ID_KEY), MDC.get(SPAN_ID_KEY)))
                 .mensaje(mensaje)
                 .detalles(lstDetalles)
                 .build();

@@ -1,3 +1,8 @@
+-- Crear la base de datos
+CREATE DATABASE usuarios_db;
+
+-- Conectar a la base de datos
+\c usuarios_db;
 
 -- Tabla de usuarios
 CREATE TABLE public.usuario (

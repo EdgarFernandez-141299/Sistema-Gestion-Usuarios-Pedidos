@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auths ->
                     auths
-                            .requestMatchers("/security/login", "/gestion-usuarios/insertar-usuario").permitAll()
+                            .requestMatchers("/security/login").permitAll()
                             .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
