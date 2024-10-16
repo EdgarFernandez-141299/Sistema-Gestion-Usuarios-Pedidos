@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UsuarioEntity usuario = this.usuarioRepository.findByNombre(nombreUsuario)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("%s %s", USER_INVALID_MENSAJE_BASE, nombreUsuario)));
 
-        if (!usuario.getActivo()) {
+        if (!usuario.isActivo()) {
             throw new InternalAuthenticationServiceException("La cuenta del usuario se encuentra inactiva");
         }
 

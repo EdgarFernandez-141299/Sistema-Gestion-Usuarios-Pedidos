@@ -1,4 +1,4 @@
-package net.edgar.microserviceusuarios.filter;
+package net.edgar.microservicepedidos.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -10,10 +10,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.edgar.microserviceusuarios.exception.MissingTokenException;
-import net.edgar.microserviceusuarios.helper.JWTHelper;
-import net.edgar.microserviceusuarios.helper.SecurityHelper;
-import net.edgar.microserviceusuarios.utility.TraceabilityUtils;
+
+import net.edgar.microservicepedidos.exception.MissingTokenException;
+import net.edgar.microservicepedidos.helper.JWTHelper;
+import net.edgar.microservicepedidos.helper.SecurityHelper;
+import net.edgar.microservicepedidos.utility.TraceabilityUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,8 +29,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.SecurityConstant.*;
-import static net.edgar.microserviceusuarios.constant.MicroserviceUsuariosConstant.TraceabilityConstant.*;
+import static net.edgar.microserviceusuarios.constant.MicroservicePedidosConstant.SecurityConstant.*;
+import static net.edgar.microserviceusuarios.constant.MicroservicePedidosConstant.TraceabilityConstant.*;
 
 
 @Component
@@ -61,6 +62,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         try {
             if (Objects.nonNull(authorizationHeader) && authorizationHeader.startsWith(BEARER_PREFIX)) {
                 String jwt = authorizationHeader.substring(7);
+                request.setAttribute(FORMATTED_TOKEN, jwt); // -> Setea el JWT mediante un atributo del 'HttpServletRequest' para que pueda ser recuperado en un controller con el mismo objeto 'HttpServletRequest., en este caso se uso en el recurso de /refresh-token
                 this.processAuthorization(request, jwt);
             } else {
                 throw new MissingTokenException(NO_AUTHENTICATION_TOKEN_PROVIDED_MESSAGE);
@@ -85,11 +87,9 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private void processAuthorization(HttpServletRequest request, String jwt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-
         this.jwtHelper.validateToken(jwt);
 
-        String userJwt = this.jwtHelper.extractUsername(jwt);
-        UserDetails userDetails = this.securityHelper.loadUserAuthorizationDetails(userJwt);
+        UserDetails userDetails = this.securityHelper.loadUserAuthorizationDetails(this.jwtHelper.extrtactSubject(jwt),  this.jwtHelper.extractUsername(jwt));
 
         this.authorizeUser(request, userDetails);
     }

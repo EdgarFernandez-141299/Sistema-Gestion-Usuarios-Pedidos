@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "b8657ca3-e0cb-410c-ae13-2772a5f11a74",
+		"name": "microservice-pedidos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12863902"
+	},
+	"item": [
+		{
+			"name": "api-pedidos",
+			"item": [
+				{
+					"name": "POST /gestion-pedidos/insertar-pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1IiwidXN1YXJpbyI6ImVkZ2FyLWFmYS05MCIsImV4cCI6MTcyOTA4NTE5MCwiaWF0IjoxNzI5MDU2MzkwfQ.EBqoJqvxLBsm86gYiWI_O8k7zFkeozxLmeYCdzIL2lPVS5B_FCZuYpAvSLR_fgNoozLWPNP9YSC4dIe5JsSlVQDmkQHWd_W-ck6mrzVBRndbJ5DJfwwMl_P4PblW2SExIfbhE-A_xkq5qYrQXKzbV4nuGLssdc0GY8W_ohojjeMTsfFSwJYkagkPwcu2gA806cVeqM97yRF894cX4405ilAS3rKv3cVNOo8NcjbTLxI3UGmZOHax1jvoDENrhQauVvO8s_A8GQCxHzHsqv9tjS-FfKuQBrit8pdcKPZUIVG9gSnPBLQ9vspQoNxO4-ux4y4jFoBYkqDhUJjqNn-d4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total\": 5000.23,\n    \"idUsuario\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/gestion-pedidos/insertar-pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"gestion-pedidos",
+								"insertar-pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /gestion-pedidos/buscar-pedidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1IiwidXN1YXJpbyI6ImVkZ2FyLWFmYS05MCIsImV4cCI6MTcyOTA4NTE5MCwiaWF0IjoxNzI5MDU2MzkwfQ.EBqoJqvxLBsm86gYiWI_O8k7zFkeozxLmeYCdzIL2lPVS5B_FCZuYpAvSLR_fgNoozLWPNP9YSC4dIe5JsSlVQDmkQHWd_W-ck6mrzVBRndbJ5DJfwwMl_P4PblW2SExIfbhE-A_xkq5qYrQXKzbV4nuGLssdc0GY8W_ohojjeMTsfFSwJYkagkPwcu2gA806cVeqM97yRF894cX4405ilAS3rKv3cVNOo8NcjbTLxI3UGmZOHax1jvoDENrhQauVvO8s_A8GQCxHzHsqv9tjS-FfKuQBrit8pdcKPZUIVG9gSnPBLQ9vspQoNxO4-ux4y4jFoBYkqDhUJjqNn-d4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/gestion-pedidos/buscar-pedidos/PEND",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"gestion-pedidos",
+								"buscar-pedidos",
+								"PEND"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /gestion-pedidos/seleccionar-pedido?idPedido={idPedido}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1IiwidXN1YXJpbyI6ImVkZ2FyLWFmYS05MCIsImV4cCI6MTcyOTA4NTE5MCwiaWF0IjoxNzI5MDU2MzkwfQ.EBqoJqvxLBsm86gYiWI_O8k7zFkeozxLmeYCdzIL2lPVS5B_FCZuYpAvSLR_fgNoozLWPNP9YSC4dIe5JsSlVQDmkQHWd_W-ck6mrzVBRndbJ5DJfwwMl_P4PblW2SExIfbhE-A_xkq5qYrQXKzbV4nuGLssdc0GY8W_ohojjeMTsfFSwJYkagkPwcu2gA806cVeqM97yRF894cX4405ilAS3rKv3cVNOo8NcjbTLxI3UGmZOHax1jvoDENrhQauVvO8s_A8GQCxHzHsqv9tjS-FfKuQBrit8pdcKPZUIVG9gSnPBLQ9vspQoNxO4-ux4y4jFoBYkqDhUJjqNn-d4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/gestion-pedidos/seleccionar-pedido?idPedido=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"gestion-pedidos",
+								"seleccionar-pedido"
+							],
+							"query": [
+								{
+									"key": "idPedido",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /gestion-pedidos/actualizar-pedido/{idPedido}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODkwMzQwOSwiaWF0IjoxNzI4ODc0NjA5fQ.Jx8iHDDj86-lcnvgm1prdvQgtVl0J2ya1kkVHQaDBSseH_seX807OaYedqX9GLlCpHcsI-hVeKqEBm8DVhP7Ab01WNTY6OaCh2SO5vBrozKKzb-oavJ29WT2OGQcj7wSw1flQS2duOOTKLTkMRZY-wl5mnvJxB31QIOOrdBRW3jD_lk8GSYwwuEJvn8UVa2zaiKny9P3YA4ZEAfNLzuoAySMFsKSXLqm5S43zTZJCZCLo8F41RR6CoZnvLgYDtw4QgLXBXFfVrYGUjLtaNurtQ-ZQ9_54zk8LzfJbS2HA8ovLFE3w6nNXo-ZkV4CYtuH_KsFD-KQkFutGtnvXtXLHA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estado\":\"COMPLETADO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/gestion-pedidos/actualizar-pedido/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"gestion-pedidos",
+								"actualizar-pedido",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /gestion-pedidos/eliminar-pedido/{idPedido}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODkwMzQwOSwiaWF0IjoxNzI4ODc0NjA5fQ.Jx8iHDDj86-lcnvgm1prdvQgtVl0J2ya1kkVHQaDBSseH_seX807OaYedqX9GLlCpHcsI-hVeKqEBm8DVhP7Ab01WNTY6OaCh2SO5vBrozKKzb-oavJ29WT2OGQcj7wSw1flQS2duOOTKLTkMRZY-wl5mnvJxB31QIOOrdBRW3jD_lk8GSYwwuEJvn8UVa2zaiKny9P3YA4ZEAfNLzuoAySMFsKSXLqm5S43zTZJCZCLo8F41RR6CoZnvLgYDtw4QgLXBXFfVrYGUjLtaNurtQ-ZQ9_54zk8LzfJbS2HA8ovLFE3w6nNXo-ZkV4CYtuH_KsFD-KQkFutGtnvXtXLHA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/gestion-pedidos/eliminar-pedido/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"gestion-pedidos",
+								"eliminar-pedido",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

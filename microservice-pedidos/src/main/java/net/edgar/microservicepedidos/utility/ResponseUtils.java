@@ -9,9 +9,10 @@ import org.slf4j.MDC;
 
 import java.util.List;
 
-import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.ResponseConstant.OK_MENSAJE_BASE;
-import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.TraceabilityConstant.SPAN_ID_KEY;
-import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.TraceabilityConstant.TRACE_ID_KEY;
+import static net.edgar.microserviceusuarios.constant.MicroservicePedidosConstant.ResponseConstant.OK_MENSAJE_BASE;
+import static net.edgar.microserviceusuarios.constant.MicroservicePedidosConstant.TraceabilityConstant.SPAN_ID_KEY;
+import static net.edgar.microserviceusuarios.constant.MicroservicePedidosConstant.TraceabilityConstant.TRACE_ID_KEY;
+
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseUtils {

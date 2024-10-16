@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "d865832b-339c-4d45-8e2a-90c2787979e8",
+		"name": "microservice-usuarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12863902"
+	},
+	"item": [
+		{
+			"name": "api-usuarios",
+			"item": [
+				{
+					"name": "POST /gestion-usuarios/insertar-usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyOTAxODQ5MSwiaWF0IjoxNzI4OTg5NjkxfQ.rw53DGjBty_2Pcq_OArBvWO52d2NCFaD5eI_XZQxdRNne8HWxr_wuRgl_otWPIasrIQSaSXadKGybtbNgLKnHQApQALCgu1fshgVyFgsoUtYdiYKD4rNE-_OFLEVpyIFhhnYIUiGn2LkfawQbgiKirZaL23w2yFSBatY1tVpwjmPOtyIhSslbBggsUpb92VS07oQZVQ96k21K1k3c0TQRA0cseTrLU_6mkj267CNPU1ryA9rlK0sKyU8a3RqTcHe7WL_LveaOsfMzOYj8QjStdA8y8iGheAFhHhhNtRGVWn2AXXkoWgeng6t1cMzeVIyOi2m78jrj2hIpPa-toq_nQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"edgar-afa-90\",\n    \"claveAcceso\": \"ibrahimovic141299;\",\n    \"correoElectronico\":\"edgarfernavila90@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/gestion-usuarios/insertar-usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"gestion-usuarios",
+								"insertar-usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /gestion-usuarios/buscar-usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODk4NjY4OCwiaWF0IjoxNzI4OTU3ODg4fQ.svkHbP7AYesJSffM0pecEN73YzCePFVPAzNE4GdFYyzuH-KDlDlir3jdEtT9EbLBa5GxmwheejG673reQdOW6S_G1mnuDdErY-KIUd4v6hFUMIi-huQY65nkPU3wT98UdETLgMrFgPZeOTdNnC7W91HvNrq1DqH_sIl6zqD3RORho5iwgY6eWgEiqF3Ufh4d-ngqZFrQnKG0Ny-yKy0faeNGGeybwBfPWRB0Az76uEsFMzV1Qyu2b9FnM34vGGH_-BArqBzAKIYvd4PShGAKRNmCuOk_fvuXQxdjSnrMrzH8WPrc9YdhDHvNljvwIu9J8cyUGmU_a642RtrMh8I-tQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/gestion-usuarios/buscar-usuarios/%20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"gestion-usuarios",
+								"buscar-usuarios",
+								"%20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /gestion-usuarios/seleccionar-usuario?idUsuario={idUsuario}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODkwMzQwOSwiaWF0IjoxNzI4ODc0NjA5fQ.Jx8iHDDj86-lcnvgm1prdvQgtVl0J2ya1kkVHQaDBSseH_seX807OaYedqX9GLlCpHcsI-hVeKqEBm8DVhP7Ab01WNTY6OaCh2SO5vBrozKKzb-oavJ29WT2OGQcj7wSw1flQS2duOOTKLTkMRZY-wl5mnvJxB31QIOOrdBRW3jD_lk8GSYwwuEJvn8UVa2zaiKny9P3YA4ZEAfNLzuoAySMFsKSXLqm5S43zTZJCZCLo8F41RR6CoZnvLgYDtw4QgLXBXFfVrYGUjLtaNurtQ-ZQ9_54zk8LzfJbS2HA8ovLFE3w6nNXo-ZkV4CYtuH_KsFD-KQkFutGtnvXtXLHA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/gestion-usuarios/seleccionar-usuario?idUsuario=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"gestion-usuarios",
+								"seleccionar-usuario"
+							],
+							"query": [
+								{
+									"key": "idUsuario",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /gestion-usuarios/actualizar-usuario/{idUsuario}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODkwMzQwOSwiaWF0IjoxNzI4ODc0NjA5fQ.Jx8iHDDj86-lcnvgm1prdvQgtVl0J2ya1kkVHQaDBSseH_seX807OaYedqX9GLlCpHcsI-hVeKqEBm8DVhP7Ab01WNTY6OaCh2SO5vBrozKKzb-oavJ29WT2OGQcj7wSw1flQS2duOOTKLTkMRZY-wl5mnvJxB31QIOOrdBRW3jD_lk8GSYwwuEJvn8UVa2zaiKny9P3YA4ZEAfNLzuoAySMFsKSXLqm5S43zTZJCZCLo8F41RR6CoZnvLgYDtw4QgLXBXFfVrYGUjLtaNurtQ-ZQ9_54zk8LzfJbS2HA8ovLFE3w6nNXo-ZkV4CYtuH_KsFD-KQkFutGtnvXtXLHA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"claveAcceso\":\"ibrahimovic141299;\",\n    \"correoElectronico\":\"edgar_fernavila@hotmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/gestion-usuarios/actualizar-usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"gestion-usuarios",
+								"actualizar-usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /gestion-usuarios/eliminar-usuario/{idUsuario}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODkwMzQwOSwiaWF0IjoxNzI4ODc0NjA5fQ.Jx8iHDDj86-lcnvgm1prdvQgtVl0J2ya1kkVHQaDBSseH_seX807OaYedqX9GLlCpHcsI-hVeKqEBm8DVhP7Ab01WNTY6OaCh2SO5vBrozKKzb-oavJ29WT2OGQcj7wSw1flQS2duOOTKLTkMRZY-wl5mnvJxB31QIOOrdBRW3jD_lk8GSYwwuEJvn8UVa2zaiKny9P3YA4ZEAfNLzuoAySMFsKSXLqm5S43zTZJCZCLo8F41RR6CoZnvLgYDtw4QgLXBXFfVrYGUjLtaNurtQ-ZQ9_54zk8LzfJbS2HA8ovLFE3w6nNXo-ZkV4CYtuH_KsFD-KQkFutGtnvXtXLHA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/gestion-usuarios/eliminar-usuario/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"gestion-usuarios",
+								"eliminar-usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api-seguridad",
+			"item": [
+				{
+					"name": "publico",
+					"item": [
+						{
+							"name": "POST /security/login",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"usuario\": \"edgar-afa-90\",\r\n    \"claveAcceso\": \"ibrahimovic141299;\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/security/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"security",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST /security/refresh-token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidXN1YXJpbyI6ImVkZ2FyLWFmYSIsImV4cCI6MTcyODk4NjY4OCwiaWF0IjoxNzI4OTU3ODg4fQ.svkHbP7AYesJSffM0pecEN73YzCePFVPAzNE4GdFYyzuH-KDlDlir3jdEtT9EbLBa5GxmwheejG673reQdOW6S_G1mnuDdErY-KIUd4v6hFUMIi-huQY65nkPU3wT98UdETLgMrFgPZeOTdNnC7W91HvNrq1DqH_sIl6zqD3RORho5iwgY6eWgEiqF3Ufh4d-ngqZFrQnKG0Ny-yKy0faeNGGeybwBfPWRB0Az76uEsFMzV1Qyu2b9FnM34vGGH_-BArqBzAKIYvd4PShGAKRNmCuOk_fvuXQxdjSnrMrzH8WPrc9YdhDHvNljvwIu9J8cyUGmU_a642RtrMh8I-tQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/security/refresh-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"security",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api-pedidos",
+			"item": [
+				{
+					"name": "POST /api-pedidos/crear-pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1IiwidXN1YXJpbyI6ImVkZ2FyLWFmYS05MCIsImV4cCI6MTcyOTA4NTE5MCwiaWF0IjoxNzI5MDU2MzkwfQ.EBqoJqvxLBsm86gYiWI_O8k7zFkeozxLmeYCdzIL2lPVS5B_FCZuYpAvSLR_fgNoozLWPNP9YSC4dIe5JsSlVQDmkQHWd_W-ck6mrzVBRndbJ5DJfwwMl_P4PblW2SExIfbhE-A_xkq5qYrQXKzbV4nuGLssdc0GY8W_ohojjeMTsfFSwJYkagkPwcu2gA806cVeqM97yRF894cX4405ilAS3rKv3cVNOo8NcjbTLxI3UGmZOHax1jvoDENrhQauVvO8s_A8GQCxHzHsqv9tjS-FfKuQBrit8pdcKPZUIVG9gSnPBLQ9vspQoNxO4-ux4y4jFoBYkqDhUJjqNn-d4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total\": 74125.23\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api-pedidos/crear-pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api-pedidos",
+								"crear-pedido"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

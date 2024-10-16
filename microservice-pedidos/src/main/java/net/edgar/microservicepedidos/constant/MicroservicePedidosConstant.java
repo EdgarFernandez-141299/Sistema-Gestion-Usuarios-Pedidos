@@ -1,4 +1,4 @@
-package net.edgar.microservicepedidos.constant;
+package net.edgar.microserviceusuarios.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -28,7 +28,6 @@ public class MicroservicePedidosConstant {
 
         public static final String UNSUPPORTED_JWT = "unsupportedJwt";
 
-        public static final String ACCESS_TOKEN_HEADER = "Access-Token";
 
         public static final String AUTHORIZATION_HEADER = "Authorization";
 
@@ -42,6 +41,8 @@ public class MicroservicePedidosConstant {
 
         public static final String BEARER_PREFIX = "Bearer ";
 
+        public static final String DUMMY_PASSWORD = "{noop}dummyPassword";
+
         public static final String NO_AUTHENTICATION_TOKEN_PROVIDED_MESSAGE = "No authentication token provided";
 
         public static final String UNAUTHORIZED_CODIGO_BASE = "401.edgar-net-unauthorized.401";
@@ -51,10 +52,6 @@ public class MicroservicePedidosConstant {
         public static final String FORBIDDEN_CODIGO_BASE = "403.edgar-net-unauthorized.403";
 
         public static final String FORBIDDEN_MENSAJE_BASE = "Ocurrió un error de acceso prohibido";
-
-        public static final String BAD_CREDENTIALS_DETALLES_MENSAJE_BASE = "Credenciales erróneas";
-
-        public static final String USER_INVALID_MENSAJE_BASE = "Usuario invalido:";
 
         public static final String ACCESS_CONTROL_ALLOW_ORIGIN_VALUE = "*";
 
@@ -88,11 +85,6 @@ public class MicroservicePedidosConstant {
 
         public static final String BAD_REQUEST_MENSAJE_BASE = "Parametros de entrada incorrectos";
 
-        public static final String EXISTING_USER_CODIGO_BASE = "400.edgar-net-existing-user.400";
-
-        public static final String EXISTING_USER_MENSAJE_BASE = "Usuario existente";
-
-        public static final String EXISTING_USER_MENSAJE = "El usuario '%s' ya existe";
 
     }
 

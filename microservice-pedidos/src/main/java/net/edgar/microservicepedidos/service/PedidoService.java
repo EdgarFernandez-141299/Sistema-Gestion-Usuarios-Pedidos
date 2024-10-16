@@ -18,4 +18,6 @@ public interface PedidoService {
 
     PedidoDTO actualizarPedido(Long idPedido, PedidoUpdateRequestDTO pedidoUpdateRequestDTO) throws UpdateDatabaseException, NotFoundException;
 
+    String eliminarPedido(Long idPedido) throws UpdateDatabaseException;
+
 }

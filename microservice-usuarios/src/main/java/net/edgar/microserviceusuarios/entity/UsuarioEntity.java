@@ -39,7 +39,7 @@ public class UsuarioEntity implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "activo")
-    private Boolean activo;
+    private boolean activo;
 
     @CreatedDate
     @Column(name = "fecha_registro", updatable = false)

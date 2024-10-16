@@ -1,4 +1,5 @@
-package net.edgar.microservicepedidos.model.dto.pedido.request;
+package net.edgar.microserviceusuarios.model.dto.pedido.request;
+
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,12 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PedidoCreateRequestDTO {
-
+public class PedidoUsuarioRequestDTO {
 
     @NotNull(message = "total es requerido")
     private Double total;
-
-    @NotNull(message = "idUsuario es requerido")
-    private Long idUsuario;
 }

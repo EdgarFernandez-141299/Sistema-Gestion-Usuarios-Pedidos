@@ -54,5 +54,4 @@ public class UsuarioController {
         return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.usuarioService.eliminarUsuario(idUsuario)));
     }
 
-
 }

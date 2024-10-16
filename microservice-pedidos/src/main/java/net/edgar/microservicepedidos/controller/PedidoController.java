@@ -9,6 +9,7 @@ import net.edgar.microservicepedidos.model.dto.pedido.request.PedidoCreateReques
 import net.edgar.microservicepedidos.model.dto.pedido.request.PedidoUpdateRequestDTO;
 import net.edgar.microservicepedidos.service.PedidoService;
 import net.edgar.microservicepedidos.utility.ResponseUtils;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -44,6 +45,11 @@ public class PedidoController {
     @PatchMapping("/actualizar-pedido/{idPedido}")
     public ResponseEntity<GlobalSuccessResponseDTO<Object>> actualizarPedido(@PathVariable("idPedido") Long idUsuario, @RequestBody @Valid PedidoUpdateRequestDTO pedidoUpdateRequestDTO) throws UpdateDatabaseException, NotFoundException {
         return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.pedidoService.actualizarPedido(idUsuario, pedidoUpdateRequestDTO)));
+    }
+
+    @DeleteMapping("/eliminar-pedido/{idPedido}")
+    public ResponseEntity<GlobalSuccessResponseDTO<Object>> eliminarPedido(@PathVariable("idPedido") Long idPedido) throws UpdateDatabaseException {
+        return ResponseEntity.ok(ResponseUtils.generateSuccessResponse(this.pedidoService.eliminarPedido(idPedido)));
     }
 
 

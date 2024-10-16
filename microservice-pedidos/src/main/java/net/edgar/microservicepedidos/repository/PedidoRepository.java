@@ -14,15 +14,15 @@ import java.util.Optional;
 public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 
     @Query("select new net.edgar.microservicepedidos.model.dto.pedido.PedidoDTO("
-            + " pedido.idPedido as idPedido, "
-            + " pedido.estado as estado, "
-            + " pedido.total as total "
-            + ") from PedidoEntity pedido "
+            + " pe.idPedido as idPedido, "
+            + " pe.estado as estado, "
+            + " pe.total as total "
+            + ") from PedidoEntity pe "
             + " where (:criterio is null "
-            + " or (lower(pedido.estado) like lower(concat('%', replace(:criterio, ' ', '%'), '%')) "
-            + " or lower(str(pedido.total)) like lower(concat('%', replace(:criterio, ' ', '%'), '%')) "
-            + " or lower(str(pedido.idPedido)) like lower(concat('%', replace(:criterio, ' ', '%'), '%'))))"
-            + " and pedido.estado != 'ELIMINADO'")
+            + " or (lower(pe.estado) like lower(concat('%', replace(:criterio, ' ', '%'), '%')) "
+            + " or lower(str(pe.total)) like lower(concat('%', replace(:criterio, ' ', '%'), '%')) "
+            + " or lower(str(pe.idPedido)) like lower(concat('%', replace(:criterio, ' ', '%'), '%'))))"
+            + " and pe.estado != 'ELIMINADO'")
     List<PedidoDTO> buscarPedidos(@Param("criterio") String criterio);
 
 
@@ -32,6 +32,11 @@ public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
     @Query("UPDATE PedidoEntity pe SET pe.estado = :estadoEnum WHERE pe.idPedido = :idPedido")
     int actualizarPedido(@Param("idPedido") Long idPedido, @Param("estadoEnum") EstadoEnum estadoEnum);
 
+    @Modifying
+    @Query("UPDATE PedidoEntity pe "
+            + "SET pe.estado = 'ELIMINADO' "
+            + "WHERE pe.idPedido = :#{#idPedido}")
+    int eliminarPedido(@Param("idPedido") Long idPedido);
 
 
 }

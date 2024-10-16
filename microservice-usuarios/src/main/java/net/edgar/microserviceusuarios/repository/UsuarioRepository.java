@@ -2,7 +2,6 @@ package net.edgar.microserviceusuarios.repository;
 
 import net.edgar.microserviceusuarios.entity.UsuarioEntity;
 import net.edgar.microserviceusuarios.model.dto.usuario.UsuarioDTO;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

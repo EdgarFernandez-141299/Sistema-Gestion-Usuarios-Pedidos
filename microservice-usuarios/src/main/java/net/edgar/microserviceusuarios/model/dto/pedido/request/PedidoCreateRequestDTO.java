@@ -1,4 +1,4 @@
-package net.edgar.microservicepedidos.model.dto.pedido.request;
+package net.edgar.microserviceusuarios.model.dto.pedido.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

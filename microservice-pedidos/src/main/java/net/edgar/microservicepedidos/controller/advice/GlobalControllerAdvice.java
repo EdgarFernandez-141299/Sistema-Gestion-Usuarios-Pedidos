@@ -17,7 +17,8 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Collections;
 
-import static net.edgar.microservicepedidos.constant.MicroservicePedidosConstant.ResponseConstant.*;
+
+import static net.edgar.microserviceusuarios.constant.MicroservicePedidosConstant.ResponseConstant.*;
 import static net.logstash.logback.argument.StructuredArguments.v;
 import static org.springframework.http.HttpStatus.*;
 
@@ -73,7 +74,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(UpdateDatabaseException.class)
     public ResponseEntity<GlobalErrorResponseDTO> UpdateDatabaseExceptionHandler(UpdateDatabaseException updateDatabaseException) {
-        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, updateDatabaseException)));
+        log.error("{}", v(EXCEPTION_DETAIL_KEY, updateDatabaseException));
         return new ResponseEntity<>(
                 ResponseUtils.generateErrorResponse(
                         BAD_REQUEST_CODIGO_BASE,
@@ -81,17 +82,6 @@ public class GlobalControllerAdvice {
                         Collections.singletonList(updateDatabaseException.getMessage()))
                 , BAD_REQUEST);
     }
-
-   /* @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<GlobalErrorResponseDTO> badCredentialsExceptionHandler(BadCredentialsException badCredentialsException) {
-        return new ResponseEntity<>(
-                ResponseUtils.generateErrorResponse(
-                        UNAUTHORIZED_CODIGO_BASE,
-                        UNAUTHORIZED_MENSAJE_BASE,
-                        Collections.singletonList(BAD_CREDENTIALS_DETALLES_MENSAJE_BASE))
-                , UNAUTHORIZED);
-
-    }*/
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

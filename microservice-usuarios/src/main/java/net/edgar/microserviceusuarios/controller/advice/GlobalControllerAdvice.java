@@ -3,11 +3,13 @@ package net.edgar.microserviceusuarios.controller.advice;
 import lombok.extern.slf4j.Slf4j;
 
 import net.edgar.microserviceusuarios.exception.ExistingUserException;
+import net.edgar.microserviceusuarios.exception.ExternalServiceResponseFailedException;
 import net.edgar.microserviceusuarios.exception.NotFoundException;
 import net.edgar.microserviceusuarios.exception.UpdateDatabaseException;
 import net.edgar.microserviceusuarios.model.dto.GlobalErrorResponseDTO;
 import net.edgar.microserviceusuarios.utility.ResponseUtils;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -123,6 +125,17 @@ public class GlobalControllerAdvice {
                 , BAD_REQUEST);
     }
 
+    @ExceptionHandler(ExternalServiceResponseFailedException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> externalServiceResponseFailedExceptionHandler(ExternalServiceResponseFailedException externalServiceResponseFailedException) {
+        log.error(String.valueOf(v(EXCEPTION_DETAIL_KEY, externalServiceResponseFailedException)));
+        return new ResponseEntity<>(
+                ResponseUtils.generateErrorResponse(
+                        externalServiceResponseFailedException.getCodigo(),
+                        externalServiceResponseFailedException.getFolio(),
+                        externalServiceResponseFailedException.getMessage(),
+                       externalServiceResponseFailedException.getDetalles())
+                , HttpStatusCode.valueOf(externalServiceResponseFailedException.getHttpCode()));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalErrorResponseDTO> globalExceptionHandler(Exception exception) {

@@ -67,4 +67,16 @@ public class PedidoServiceImpl implements PedidoService {
 
         return new PedidoDTO(pedidoEntity.getIdPedido(), pedidoEntity.getEstado(), pedidoEntity.getTotal());
     }
+
+    @Override
+    @Transactional
+    public String eliminarPedido(Long idPedido) throws UpdateDatabaseException {
+
+        if (this.pedidoRepository.eliminarPedido(idPedido) == 0) {
+            throw new UpdateDatabaseException(String.format("No fue posible eliminar el pedido con id: %s", idPedido));
+        }
+
+        return "Se ha eliminado de forma exitosa el pedido";
+    }
+
 }
